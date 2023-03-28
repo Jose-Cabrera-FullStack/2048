@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileGrid : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public TileRow[] rows { get; private set; }
+    public TileCell[] cells { get; private set; }
+
+    public int size => cells.Length;
+    public int height => rows.Length;
+    public int width => size / height;
+
+    void Awake()
     {
-        
+        rows = GetComponentsInChildren<TileRow>();
+        cells = GetComponentsInChildren<TileCell>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        for (int y = 0; y < rows.Length; y++)
+        {
+            for (int x = 0; x < rows[y].cells.Length; x++)
+            {
+                rows[y].cells[x].coordinates = new Vector2Int(x, y);
+            }
+        }
     }
 }
